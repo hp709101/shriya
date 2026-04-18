@@ -180,7 +180,7 @@
 </head>
 <body>
 
-    <audio id="bg-audio" src="ReelAudio-31589.mpeg" preload="auto"></audio>
+    <audio id="bg-audio" src="ReelAudio-31589.mp3" preload="auto"></audio>
 
     <div id="screen-1">
         <h1>world knows shreya</h1>
@@ -194,6 +194,7 @@
     </div>
 
     <script>
+        // Removed numbers from the strings
         const tags = [
             "A Maharashtrian Baddie ✨",
             "Politician 🎙️",
@@ -209,28 +210,21 @@
             const screen2 = document.getElementById("screen-2");
             const audio = document.getElementById("bg-audio");
 
+            audio.currentTime = 0;
+            audio.play().catch(error => {
+                console.log("Browser blocked auto-play. It might work when deployed to GitHub.", error);
+            });
+
             screen1.style.opacity = "0";
-            
             setTimeout(() => {
-                // Hide screen 1, show screen 2
                 screen1.style.display = "none";
                 screen2.style.display = "flex";
                 
                 void screen2.offsetWidth; 
                 screen2.style.opacity = "1";
                 
-                // Trigger the visual animations
                 startTagsSequence();
                 createFloatingElements();
-
-                // Wait exactly 30 seconds (30000 milliseconds) before playing the song
-                setTimeout(() => {
-                    audio.currentTime = 0;
-                    audio.play().catch(error => {
-                        console.log("Browser blocked auto-play.", error);
-                    });
-                }, 30000);
-
             }, 1000); 
         }
 
