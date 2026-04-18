@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <style>
+        /* Importing aesthetic fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:ital,wght@1,600&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            background-color: #f4f4f4;
+        }
+
+        /* SCREEN 1: COLORFUL BUT BASIC SHREYA */
+        #screen-1 {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #444;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            transition: opacity 1s ease, transform 1s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        #screen-1 h1 {
+            font-weight: 400;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .btn-aesthetic {
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+            background: transparent;
+            color: #333;
+            border: 1.5px solid #333;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-aesthetic:hover {
+            background: #333;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* SCREEN 2: AESTHETIC SHRIYA */
+        #screen-2 {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Container for scrolling tags */
+        #tags-container {
+            width: 90%;
+            max-width: 500px;
+            height: 50vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 20px;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            z-index: 10;
+        }
+        #tags-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Individual Tag Styling - NOW ELEGANT TEXT INSTEAD OF BUTTONS */
+        .tag {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-style: italic;
+            color: #ffffff;
+            margin: 12px 0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(173, 216, 230, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFade 0.8s ease-out forwards;
+            text-align: center;
+        }
+
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* The Final Pop Name */
+        #final-name {
+            display: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            font-weight: 600;
+            font-style: italic;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(173, 216, 230, 0.6);
+            transform: scale(0);
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            margin-top: 20px;
+            z-index: 10;
+        }
+
+        @keyframes popIn {
+            to { transform: scale(1); }
+        }
+
+        /* The text that appears after her name */
+        #final-message {
+            display: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px; 
+            color: #e0e0e0;
+            margin-top: 15px;
+            font-style: italic;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInMsg 2s forwards;
+            z-index: 10;
+            max-width: 85%; 
+            text-align: center;
+            line-height: 1.5; 
+        }
+
+        @keyframes fadeInMsg {
+            to { opacity: 1; }
+        }
+
+        /* Floating Aesthetic Elements */
+        .aesthetic-element {
+            position: absolute;
+            opacity: 0;
+            animation: floatUp 7s infinite linear;
+            pointer-events: none;
+            z-index: 1;
+            text-shadow: 0 0 15px rgba(255,255,255,0.4);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-audio" src="ReelAudio-31589.mp3" preload="auto"></audio>
+
+    <div id="screen-1">
+        <h1>world knows shreya</h1>
+        <button class="btn-aesthetic" onclick="startAesthetic()">The Shriya U need to know</button>
+    </div>
+
+    <div id="screen-2">
+        <div id="tags-container"></div>
+        <div id="final-name">Shriya</div>
+        <div id="final-message">people wonder if you’ve had three espressos or if just naturally a glitch in the Matrix. Never change</div>
+    </div>
+
+    <script>
+        // Removed numbers from the strings
+        const tags = [
+            "A Maharashtrian Baddie ✨",
+            "Politician 🎙️",
+            "Sporty 🎾",
+            "Dancer 💃",
+            "Foodie 🍕",
+            "Crazy Person 🤪",
+            "Papa Ki Pari 🧚‍♀️"
+        ];
+
+        function startAesthetic() {
+            const screen1 = document.getElementById("screen-1");
+            const screen2 = document.getElementById("screen-2");
+            const audio = document.getElementById("bg-audio");
+
+            audio.currentTime = 0;
+            audio.play().catch(error => {
+                console.log("Browser blocked auto-play. It might work when deployed to GitHub.", error);
+            });
+
+            screen1.style.opacity = "0";
+            setTimeout(() => {
+                screen1.style.display = "none";
+                screen2.style.display = "flex";
+                
+                void screen2.offsetWidth; 
+                screen2.style.opacity = "1";
+                
+                startTagsSequence();
+                createFloatingElements();
+            }, 1000); 
+        }
+
+        function startTagsSequence() {
+            const container = document.getElementById("tags-container");
+            let tagIndex = 0;
+
+            const interval = setInterval(() => {
+                if (tagIndex < tags.length) {
+                    const tagEl = document.createElement("div");
+                    tagEl.className = "tag";
+                    tagEl.innerText = tags[tagIndex];
+                    container.appendChild(tagEl);
+
+                    container.scrollTop = container.scrollHeight;
+                    tagIndex++;
+                } else {
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        const finalName = document.getElementById("final-name");
+                        finalName.style.display = "block";
+                        
+                        setTimeout(() => {
+                            const finalMessage = document.getElementById("final-message");
+                            finalMessage.style.display = "block";
+                            container.scrollTop = container.scrollHeight; 
+                        }, 1500);
+
+                        container.scrollTop = container.scrollHeight; 
+                    }, 1000);
+                }
+            }, 1000); 
+        }
+
+        function createFloatingElements() {
+            const screen2 = document.getElementById("screen-2");
+            const symbols = ['🌸', '💮', '✨', '🤍', '✦'];
+            
+            for(let i = 0; i < 30; i++) {
+                let el = document.createElement("div");
+                el.className = "aesthetic-element";
+                
+                el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                el.style.left = Math.random() * 100 + "vw";
+                el.style.fontSize = (Math.random() * 20 + 15) + "px";
+                el.style.animationDelay = Math.random() * 5 + "s";
+                el.style.animationDuration = (Math.random() * 5 + 6) + "s";
+                
+                screen2.appendChild(el);
+            }
+        }
+    </script>
+</body>
+</html>
